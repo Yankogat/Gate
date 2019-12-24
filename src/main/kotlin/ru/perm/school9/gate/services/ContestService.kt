@@ -14,9 +14,14 @@ class ContestService : DTOConsumingFactory<Contest, ContestDTO> {
     @Autowired
     lateinit var contestRepository: ContestRepository
 
+    @Autowired
+    lateinit var problemService: ProblemService
+
     override fun constructFromDTO(dto: ContestDTO): Contest {
         // TODO
-        return Contest()
+        return produce().apply {
+            problems = problemService.getAllProblemsFromContestDTO(dto)
+        }
     }
 
     override fun produce(): Contest {
@@ -27,7 +32,8 @@ class ContestService : DTOConsumingFactory<Contest, ContestDTO> {
     fun getAvailableContests(): List<Contest> {
         // TODO
         // Get all ContestDTOs from Repository
-        // construct Contest objects using them
-        return listOf()
+        val contestDTOList = contestRepository.findAll()
+        // construct Contest objects using DTOs
+        return contestDTOList.map { constructFromDTO(it) }
     }
 }
