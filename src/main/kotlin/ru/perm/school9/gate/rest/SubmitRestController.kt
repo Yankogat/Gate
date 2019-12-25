@@ -1,4 +1,4 @@
-package ru.perm.school9.gate.services
+package ru.perm.school9.gate.rest
 
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
