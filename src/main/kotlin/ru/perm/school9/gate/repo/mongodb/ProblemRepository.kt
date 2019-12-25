@@ -1,7 +1,6 @@
 package ru.perm.school9.gate.repo.mongodb
 
 import org.springframework.data.mongodb.repository.MongoRepository
-import org.springframework.data.mongodb.repository.Query
-import ru.perm.school9.gate.model.dto.ProblemDTO
+import ru.perm.school9.gate.model.Problem
 
-interface ProblemRepository : MongoRepository<ProblemDTO, String>
+interface ProblemRepository : MongoRepository<Problem, String>

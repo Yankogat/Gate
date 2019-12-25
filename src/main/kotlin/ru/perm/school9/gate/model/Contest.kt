@@ -1,11 +1,15 @@
 package ru.perm.school9.gate.model
 
-import ru.perm.school9.gate.model.groups.ProblemGroup
-import ru.perm.school9.gate.model.groups.SubmitGroup
-import ru.perm.school9.gate.model.groups.UserGroup
+import org.springframework.data.annotation.Id
+import org.springframework.data.mongodb.core.mapping.Document
+import ru.perm.school9.gate.model.util.IdList
 
-class Contest : ProblemGroup, UserGroup, SubmitGroup {
-    override var problems: List<Problem> = listOf()
-    override var users: List<User> = listOf()
-    override var submits: List<Submit> = listOf()
-}
+@Document(collection = "Contests")
+data class Contest (
+        @Id
+        var id: String,
+        var problemIds: IdList,
+        var userIds: IdList
+)
+
+

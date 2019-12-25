@@ -2,26 +2,15 @@ package ru.perm.school9.gate.services
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import ru.perm.school9.gate.model.Contest
 import ru.perm.school9.gate.model.Problem
-import ru.perm.school9.gate.model.dto.ContestDTO
-import ru.perm.school9.gate.model.dto.ProblemDTO
 import ru.perm.school9.gate.repo.mongodb.ProblemRepository
 
 @Service
-class ProblemService : DTOConsumingFactory<Problem, ProblemDTO> {
+class ProblemService {
     @Autowired
     lateinit var problemRepository: ProblemRepository
 
-    override fun constructFromDTO(dto: ProblemDTO): Problem {
-        // TODO
-        return Problem()
-    }
-
-    override fun produce(): Problem {
-        // TODO
-        return Problem()
-    }
-
-    fun getAllProblemsFromContestDTO(contestDTO: ContestDTO): List<Problem>
-            = problemRepository.findAllById(contestDTO.problemsIds).map { constructFromDTO(it) }
+    fun getAllProblemsFromContest(contest: Contest): List<Problem>
+            = problemRepository.findAllById(contest.problemIds).toList()
 }
