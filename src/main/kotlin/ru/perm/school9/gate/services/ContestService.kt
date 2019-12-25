@@ -19,13 +19,13 @@ class ContestService {
 
     fun getAvailableContests(): List<Contest> {
         //TODO
-        // check contests for availablity
+        // check contests for availability
         return contestRepository.findAll()
     }
 
     fun getAvailableContestById(contestId: String): Contest {
         //TODO
         // check contest for availability
-        return contestRepository.findById(contestId).orElseThrow { Exception() };
+        return contestRepository.findById(contestId).orElseThrow { Exception() }
     }
 }
