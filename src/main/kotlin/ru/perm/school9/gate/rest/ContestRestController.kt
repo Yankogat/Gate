@@ -16,25 +16,11 @@ class ContestRestController {
     @Autowired
     private lateinit var contestService: ContestService
 
-    @Autowired
-    private lateinit var problemService: ProblemService
-
-    @GetMapping("/")
+    @GetMapping
     fun getContestList(): List<Contest> {
         // TODO
         // Get all available contests for authenticated user
         // Return them in the response
         return contestService.getAvailableContests()
-    }
-
-    @GetMapping("{contestId}/problems/")
-    fun getProblems(@PathVariable contestId: String): List<Problem> {
-        // TODO
-        // Get contest by id if it is available for authenticated user
-        // If not, throw 403
-        val contest = contestService.getAvailableContestById(contestId)
-        // Get all problems from specified contest
-        // Return said problems
-        return problemService.getAllProblemsFromContest(contest)
     }
 }

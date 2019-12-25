@@ -26,6 +26,7 @@ class ContestService {
     fun getAvailableContestById(contestId: String): Contest {
         //TODO
         // check contest for availability
+        // specify exception
         return contestRepository.findById(contestId).orElseThrow { Exception() }
     }
 }
