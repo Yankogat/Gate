@@ -10,7 +10,7 @@ import java.lang.Exception
 @Service
 class ProblemService {
     @Autowired
-    lateinit var problemRepository: ProblemRepository
+    private lateinit var problemRepository: ProblemRepository
 
     fun getAllProblemsFromContest(contest: Contest): List<Problem> = problemRepository.findAllById(contest.problemIds).toList()
 

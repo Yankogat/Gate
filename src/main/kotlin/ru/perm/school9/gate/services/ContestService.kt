@@ -12,10 +12,7 @@ import java.lang.Exception
 @Service
 class ContestService {
     @Autowired
-    lateinit var contestRepository: ContestRepository
-
-    @Autowired
-    lateinit var problemService: ProblemService
+    private lateinit var contestRepository: ContestRepository
 
     fun getAvailableContests(): List<Contest> {
         //TODO

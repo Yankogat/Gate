@@ -1,0 +1,23 @@
+package ru.perm.school9.gate.services
+
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
+import ru.perm.school9.gate.model.Contest
+import ru.perm.school9.gate.model.Problem
+import ru.perm.school9.gate.model.Submit
+import ru.perm.school9.gate.model.User
+import ru.perm.school9.gate.repo.mongodb.SubmitRepository
+
+@Service
+class SubmitService {
+    @Autowired
+    private lateinit var submitRepository: SubmitRepository
+
+    fun getAllSubmits(): List<Submit> {
+        return submitRepository.findAll()
+    }
+
+    fun getAllSubmitsByContestAndProblemAndUser(contest: Contest, problem: Problem, user: User): List<Submit> {
+        return submitRepository.findByContestIdAndProblemIdAndUserId(contest.id, problem.id, user.id)
+    }
+}
