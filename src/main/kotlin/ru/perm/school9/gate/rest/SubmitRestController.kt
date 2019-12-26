@@ -5,11 +5,10 @@ import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RestController
 import ru.perm.school9.gate.model.Submit
-import ru.perm.school9.gate.model.User
-import ru.perm.school9.gate.services.ContestService
-import ru.perm.school9.gate.services.ProblemService
-import ru.perm.school9.gate.services.SubmitService
-import ru.perm.school9.gate.services.UserService
+import ru.perm.school9.gate.service.ContestService
+import ru.perm.school9.gate.service.ProblemService
+import ru.perm.school9.gate.service.SubmitService
+import ru.perm.school9.gate.service.UserService
 
 @RestController
 class SubmitRestController {

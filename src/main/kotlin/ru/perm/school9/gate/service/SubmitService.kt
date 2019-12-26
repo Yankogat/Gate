@@ -1,4 +1,4 @@
-package ru.perm.school9.gate.services
+package ru.perm.school9.gate.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service

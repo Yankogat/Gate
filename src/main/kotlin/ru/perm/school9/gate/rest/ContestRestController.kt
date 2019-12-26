@@ -2,13 +2,10 @@ package ru.perm.school9.gate.rest
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import ru.perm.school9.gate.model.Contest
-import ru.perm.school9.gate.model.Problem
-import ru.perm.school9.gate.services.ContestService
-import ru.perm.school9.gate.services.ProblemService
+import ru.perm.school9.gate.service.ContestService
 
 @RestController
 @RequestMapping("/contests")

@@ -1,7 +1,8 @@
-package ru.perm.school9.gate.services
+package ru.perm.school9.gate.service
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
+import ru.perm.school9.gate.exception.ContestNotFoundException
 import ru.perm.school9.gate.model.Contest
 import ru.perm.school9.gate.repo.mongodb.ContestRepository
 import java.lang.Exception
@@ -23,7 +24,6 @@ class ContestService {
     fun getAvailableContestById(contestId: String): Contest {
         //TODO
         // check contest for availability
-        // specify exception
-        return contestRepository.findById(contestId).orElseThrow { Exception() }
+        return contestRepository.findById(contestId).orElseThrow { ContestNotFoundException() }
     }
 }
