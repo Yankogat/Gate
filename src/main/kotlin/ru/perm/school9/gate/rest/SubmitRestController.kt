@@ -9,6 +9,7 @@ import ru.perm.school9.gate.model.User
 import ru.perm.school9.gate.services.ContestService
 import ru.perm.school9.gate.services.ProblemService
 import ru.perm.school9.gate.services.SubmitService
+import ru.perm.school9.gate.services.UserService
 
 @RestController
 class SubmitRestController {
@@ -20,6 +21,9 @@ class SubmitRestController {
 
     @Autowired
     private lateinit var submitService: SubmitService
+
+    @Autowired
+    private lateinit var userService: UserService
 
     @GetMapping("/submits/")
     fun getAllSubmits(): List<Submit> {
@@ -57,9 +61,8 @@ class SubmitRestController {
         val contest = contestService.getAvailableContestById(contestId)
 
         val problem = problemService.getProblemFromContestById(contest, problemId)
-        //TODO
-        // Get User from service
-        val user = User("5e03ef161cac6d750a170fdb")
+
+        val user = userService.getUserById(userId)
 
         return submitService.getAllSubmitsByContestAndProblemAndUser(contest, problem, user)
     }
