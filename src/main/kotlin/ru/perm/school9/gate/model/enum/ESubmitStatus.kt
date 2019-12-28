@@ -1,6 +1,6 @@
 package ru.perm.school9.gate.model.enum
 
-enum class SubmitStatus {
+enum class ESubmitStatus {
     TESTER_INACCESSIBLE,
     AWAITING_TESTING,
     TESTING,
@@ -8,4 +8,5 @@ enum class SubmitStatus {
     TIME_LIMIT,
     MEMORY_LIMIT,
     COMPILATION_ERROR,
+    ACCEPTED
 }

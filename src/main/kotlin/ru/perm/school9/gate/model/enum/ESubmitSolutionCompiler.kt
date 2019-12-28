@@ -1,6 +1,6 @@
 package ru.perm.school9.gate.model.enum
 
-enum class SubmitSolutionCompiler {
+enum class ESubmitSolutionCompiler {
     PYTHON2,
     PYTHON3,
     C,
