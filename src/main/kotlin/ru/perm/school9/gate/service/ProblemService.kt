@@ -13,14 +13,14 @@ class ProblemService {
     @Autowired
     private lateinit var problemRepository: ProblemRepository
 
-    fun getAllProblemsFromContest(contest: Contest): List<Problem> = problemRepository.findAllById(contest.problemIds).toList()
+    fun getAllProblemsFromContest(contest: Contest): List<Problem> = problemRepository.findAllById(contest.problemIds.orEmpty()).toList()
 
     fun getProblemById(problemId: String): Problem {
         return problemRepository.findById(problemId).orElseThrow { ProblemNotFoundException() }
     }
 
     fun getProblemFromContestById(contest: Contest, problemId: String): Problem {
-        if (contest.problemIds.contains(problemId))
+        if (contest.problemIds.orEmpty().contains(problemId))
             return getProblemById(problemId)
         else
             throw ProblemNotFoundException()
