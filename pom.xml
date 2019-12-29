@@ -58,6 +58,11 @@
                 </exclusion>
             </exclusions>
         </dependency>
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel</artifactId>
+            <version>2.2.1</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -89,5 +94,12 @@
             </plugin>
         </plugins>
     </build>
+
+    <repositories>
+        <repository>
+            <id>bintray</id>
+            <url>https://jcenter.bintray.com/</url>
+        </repository>
+    </repositories>
 
 </project>
