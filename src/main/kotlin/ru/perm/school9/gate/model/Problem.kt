@@ -8,7 +8,10 @@ data class Problem (
         @Id
         var id: String?,
         var name: String?,
-        var wording: String?
-        //TODO
-        // finally decide how tests are stored within the problem and implement them
-)
+        var wording: String?,
+        override var tests: List<Test>?,
+        override var testGroups: List<TestGroup>?,
+        override var checkerId: String?,
+        override var conjuctive: Boolean?,
+        override var value: Int?
+) : TestGroup(tests, testGroups, checkerId, conjuctive, value)
