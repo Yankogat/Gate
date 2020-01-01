@@ -14,15 +14,18 @@ class ContestRestController {
 
     @GetMapping
     fun getContestList(): List<Contest> {
-        //TODO
-        // Get all available contests for authenticated user
-        // Return them in the response
         return contestService.getAvailableContests()
+    }
+
+    @GetMapping("/{contestId}")
+    fun getContestById(@PathVariable contestId: String): Contest {
+        return contestService.getAvailableContestById(contestId)
     }
 
     @GetMapping("/{contestId}/monitor")
     fun getContestMonitor(@PathVariable contestId: String): Monitor {
-        return contestService.getMonitorByContestId(contestId)
+        val contest = getContestById(contestId)
+        return contestService.getMonitorByContest(contest)
     }
 
     @PostMapping

@@ -16,6 +16,9 @@ class ContestService {
     @Autowired
     private lateinit var contestRepository: ContestRepository
 
+    @Autowired
+    private lateinit var submitService: SubmitService
+
     fun getAvailableContests(): List<Contest> {
         //TODO
         // check contests for availability
@@ -43,14 +46,40 @@ class ContestService {
 
     fun addUserToContest(contest: Contest, user: User) {
         //contest acquired from database may not have problemId list
-        contest.userIds = contest.userIds.orEmpty() as IdList
+        contest.userIds = contest.userIds ?: IdList()
         contest.userIds!!.add(user.id!!)
 
         updateContest(contest)
     }
 
-    fun getMonitorByContestId(contestId: String): Monitor {
+    fun getMonitorByContest(contest: Contest): Monitor {
         //TODO
-        return Monitor()
+        // test
+        // rewrite
+        val submits = submitService.getAllSubmitsByContest(contest)
+
+        val filterSubmitsByProblemIdAndUserId = { submits: List<Submit>, problemId: String, userId: String ->
+            submits.filter { submit ->
+                submit.userId!! == userId
+                        && submit.problemId == problemId
+            }
+        }
+
+        val getSubmitWithHighestScore: (submits: List<Submit>) -> Submit? = {
+            submits.sortedBy { submit ->
+                submit.summary?.score
+            }.firstOrNull()
+        }
+
+        val monitor = contest.userIds?.map { userId ->
+            MonitorStanding(userId, null, null, null, contest.problemIds?.map { problemId ->
+                val filteredSubmits = filterSubmitsByProblemIdAndUserId(submits, problemId, userId)
+                val bestSubmit = getSubmitWithHighestScore(filteredSubmits)
+                        ?: Submit(null, null, null, null, null, summary = SubmitSummary(0))
+                MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score ?: 0, null)
+            } ?: emptyList())
+        }
+
+        return monitor as Monitor
     }
 }

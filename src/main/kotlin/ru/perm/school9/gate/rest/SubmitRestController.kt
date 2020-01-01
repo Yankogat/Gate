@@ -22,7 +22,7 @@ class SubmitRestController {
     @Autowired
     private lateinit var userService: UserService
 
-    @GetMapping("/submits/")
+    @GetMapping("/submits")
     fun getAllSubmits(): List<Submit> {
         //TODO
         return emptyList()
@@ -36,19 +36,19 @@ class SubmitRestController {
         return submit
     }
 
-    @GetMapping("/contests/{contestId}/submits/")
+    @GetMapping("/contests/{contestId}/submits")
     fun getAllSubmitsByContest(@PathVariable contestId: String): List<Submit> {
         //TODO
         return emptyList()
     }
 
-    @GetMapping("/users/{userId}/submits/")
+    @GetMapping("/users/{userId}/submits")
     fun getAllSubmitsByUser(@PathVariable userId: String): List<Submit> {
         //TODO
         return emptyList()
     }
 
-    @GetMapping("/contests/{contestId}/problems/{problemId}/submits/")
+    @GetMapping("/contests/{contestId}/problems/{problemId}/submits")
     fun getAllSubmitsByContestAndProblem(@PathVariable contestId: String, @PathVariable problemId: String): List<Submit> {
         return emptyList()
         //TODO
@@ -56,13 +56,13 @@ class SubmitRestController {
         // if found user is not admin call getAllSubmitsByContestAndProblemAndUser
     }
 
-    @GetMapping("/contests/{contestId}/users/{userId}/submits/")
+    @GetMapping("/contests/{contestId}/users/{userId}/submits")
     fun getAllSubmitsByContestAndUser(@PathVariable contestId: String, @PathVariable userId: String): List<Submit> {
         //TODO
         return emptyList()
     }
 
-    @GetMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits/")
+    @GetMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits")
     fun getAllSubmitsByContestAndProblemAndUser(@PathVariable contestId: String, @PathVariable problemId: String, @PathVariable userId: String): List<Submit> {
         //TODO
         val contest = contestService.getAvailableContestById(contestId)
@@ -74,14 +74,14 @@ class SubmitRestController {
         return submitService.getAllSubmitsByContestAndProblemAndUser(contest, problem, user)
     }
 
-    @PostMapping("/contests/{contestId}/problems/{problemId}/submits/")
+    @PostMapping("/contests/{contestId}/problems/{problemId}/submits")
     fun addSubmitByContestAndProblem(@RequestBody submit: Submit, @PathVariable contestId: String, @PathVariable problemId: String) {
         //TODO
         // get authenticated user
         // call addSubmitByContestAndProblemAndUser
     }
 
-    @PostMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits/")
+    @PostMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits")
     fun addSubmitByContestAndProblemAndUser(@RequestBody submit: Submit, @PathVariable contestId: String, @PathVariable problemId: String, @PathVariable userId: String) {
         //TODO
         val contest = contestService.getAvailableContestById(contestId)

@@ -1,8 +1,8 @@
 package ru.perm.school9.gate.model
 
-data class MonitorTaskStanding (
-        var taskId: String,
+data class MonitorProblemStanding (
+        var problemId: String,
         var tryCount: Int,
-        var points: Int,
+        var score: Int,
         var penalty: Int?
 )

@@ -17,17 +17,15 @@ class SubmitService {
     @Autowired
     private lateinit var testerCommunicationService: TesterCommunicationService
 
-    fun getAllSubmits(): List<Submit> {
-        return submitRepository.findAll()
-    }
+    fun getAllSubmits(): List<Submit> = submitRepository.findAll()
 
-    fun getAllSubmitsByContestAndProblemAndUser(contest: Contest, problem: Problem, user: User): List<Submit> {
-        return submitRepository.findByContestIdAndProblemIdAndUserId(contest.id!!, problem.id!!, user.id!!)
-    }
 
-    fun getSubmitById(submitId: String): Submit {
-        return submitRepository.findById(submitId).orElseThrow { SubmitNotFoundException() }
-    }
+    fun getAllSubmitsByContestAndProblemAndUser(contest: Contest, problem: Problem, user: User): List<Submit> =
+            submitRepository.findByContestIdAndProblemIdAndUserId(contest.id!!, problem.id!!, user.id!!)
+
+
+    fun getSubmitById(submitId: String): Submit = submitRepository.findById(submitId).orElseThrow { SubmitNotFoundException() }
+
 
     fun addSubmitByContestAndProblemAndUser(submit: Submit, contest: Contest, problem: Problem, user: User) {
         submit.apply {
@@ -38,4 +36,6 @@ class SubmitService {
         submitRepository.insert(submit)
         testerCommunicationService.sendSubmitForTesting(submit)
     }
+
+    fun getAllSubmitsByContest(contest: Contest): List<Submit> = submitRepository.findByContestId(contest.id!!)
 }
