@@ -2,6 +2,7 @@ package ru.perm.school9.gate.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import ru.perm.school9.gate.model.alias.IdList
 import ru.perm.school9.gate.model.enum.EContestType
 
 @Document(collection = "Contests")
