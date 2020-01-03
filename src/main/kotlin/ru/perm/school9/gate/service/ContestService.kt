@@ -54,7 +54,6 @@ class ContestService {
 
     fun getMonitorByContest(contest: Contest): Monitor {
         //TODO
-        // test
         // rewrite
         val submits = submitService.getAllSubmitsByContest(contest)
 
@@ -71,7 +70,7 @@ class ContestService {
             }.firstOrNull()
         }
 
-        val monitor = contest.userIds?.map { userId ->
+        var monitorStandings = contest.userIds?.map { userId ->
             MonitorStanding(userId, null, null, null, contest.problemIds?.map { problemId ->
                 val filteredSubmits = filterSubmitsByProblemIdAndUserId(submits, problemId, userId)
                 val bestSubmit = getSubmitWithHighestScore(filteredSubmits)
@@ -80,6 +79,10 @@ class ContestService {
             } ?: emptyList())
         }
 
-        return monitor as Monitor
+        monitorStandings = monitorStandings ?: emptyList()
+
+        return Monitor().apply {
+            addAll(monitorStandings)
+        }
     }
 }

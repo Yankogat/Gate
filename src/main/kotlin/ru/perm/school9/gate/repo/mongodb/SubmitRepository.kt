@@ -8,7 +8,7 @@ import ru.perm.school9.gate.model.Submit
 
 @Repository
 interface SubmitRepository : MongoRepository<Submit, String> {
-    @Query("{contestId: ?0")
+    @Query("{contestId: ?0}")
     fun findByContestId(contestId: String): List<Submit>
 
     @Query("{contestId: ?0, userId: ?2}")

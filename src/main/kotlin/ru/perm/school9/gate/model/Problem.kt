@@ -2,6 +2,7 @@ package ru.perm.school9.gate.model
 
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
+import org.springframework.data.mongodb.core.mapping.Field
 
 @Document(collection = "Problems")
 data class Problem (
@@ -9,9 +10,9 @@ data class Problem (
         var id: String?,
         var name: String?,
         var wording: String?,
-        override var tests: List<Test>?,
-        override var testGroups: List<TestGroup>?,
-        override var checkerId: String?,
-        override var conjuctive: Boolean?,
-        override var value: Int?
-) : TestGroup(tests, testGroups, checkerId, conjuctive, value)
+        var tests: List<Test>?,
+        var testGroups: List<TestGroup>?,
+        var checkerId: String?,
+        var conjuctive: Boolean?,
+        var value: Int?
+)
