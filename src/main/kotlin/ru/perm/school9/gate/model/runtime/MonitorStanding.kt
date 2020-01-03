@@ -1,4 +1,4 @@
-package ru.perm.school9.gate.model
+package ru.perm.school9.gate.model.runtime
 
 data class MonitorStanding (
         var userId: String,

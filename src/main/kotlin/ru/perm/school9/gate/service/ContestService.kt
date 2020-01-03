@@ -6,6 +6,8 @@ import ru.perm.school9.gate.exception.ContestNotFoundException
 import ru.perm.school9.gate.model.*
 import ru.perm.school9.gate.model.alias.IdList
 import ru.perm.school9.gate.model.alias.Monitor
+import ru.perm.school9.gate.model.runtime.MonitorProblemStanding
+import ru.perm.school9.gate.model.runtime.MonitorStanding
 import ru.perm.school9.gate.repo.mongodb.ContestRepository
 
 /** ContestService is responsible for constructing/deconstructing Contest objects from/to ContestDTOs
@@ -74,13 +76,14 @@ class ContestService {
 
         var monitorStandings = contest.userIds?.map { userId ->
 
-            MonitorStanding(userId,  null, contest.problemIds?.map { problemId ->
+            MonitorStanding(userId, null, contest.problemIds?.map { problemId ->
                 val filteredSubmits = filterSubmitsByProblemIdAndUserId(submits, problemId, userId)
                 val bestSubmit = getSubmitWithHighestScore(filteredSubmits)
                         ?: Submit(null, null, null, null, null, null, null)
 
                 // even if user has no submits on some problem, they should have score of 0
-                MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score ?: 0, null)
+                MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score
+                        ?: 0, null)
             } ?: emptyList())
 
         }
