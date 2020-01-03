@@ -53,8 +53,10 @@ class ContestService {
     }
 
     fun getMonitorByContest(contest: Contest): Monitor {
+        // HELP, I AM DROWNING IN NULL SAFETY
         //TODO
-        // rewrite
+        // decide if all those nullable properties should really be nullable
+
         val submits = submitService.getAllSubmitsByContest(contest)
 
         val filterSubmitsByProblemIdAndUserId = { submits: List<Submit>, problemId: String, userId: String ->
@@ -65,21 +67,34 @@ class ContestService {
         }
 
         val getSubmitWithHighestScore: (submits: List<Submit>) -> Submit? = {
-            submits.sortedBy { submit ->
-                submit.summary?.score
-            }.firstOrNull()
+            submits.minBy { submit ->
+                submit.summary?.score ?: 0
+            }
         }
 
         var monitorStandings = contest.userIds?.map { userId ->
-            MonitorStanding(userId, null, null, null, contest.problemIds?.map { problemId ->
+
+            MonitorStanding(userId,  null, contest.problemIds?.map { problemId ->
                 val filteredSubmits = filterSubmitsByProblemIdAndUserId(submits, problemId, userId)
                 val bestSubmit = getSubmitWithHighestScore(filteredSubmits)
-                        ?: Submit(null, null, null, null, null, summary = SubmitSummary(0))
+                        ?: Submit(null, null, null, null, null, null, null)
+
+                // even if user has no submits on some problem, they should have score of 0
                 MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score ?: 0, null)
             } ?: emptyList())
-        }
 
+        }
+        // make sure list is not null (can happen when contest has null instead of userIds field
         monitorStandings = monitorStandings ?: emptyList()
+
+        // set place to each standing
+        monitorStandings = monitorStandings.sortedBy { standing ->
+            standing.totalScore
+        }.mapIndexed { index, standing ->
+            standing.apply {
+                place = index + 1
+            }
+        }
 
         return Monitor().apply {
             addAll(monitorStandings)
