@@ -23,7 +23,7 @@ class SubmitRestController {
     private lateinit var userService: UserService
 
     //TODO
-    // get opinion on THE ENORMOUS LENGTH OF URLS
+    // get opinion on the length of the urls
 
     @GetMapping("/submits")
     fun getAllSubmits(): List<Submit> {
