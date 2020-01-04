@@ -55,7 +55,7 @@ class UserRestController {
         // accessible only by root
     }
 
-    @DeleteMapping("/contest/{contestId}//users/{userId}")
+    @DeleteMapping("/contest/{contestId}/users/{userId}")
     fun removeUserFromContest(@PathVariable contestId: String, @PathVariable userId: String) {
         //TODO
         // come up with something about which users can access this path
@@ -65,5 +65,15 @@ class UserRestController {
         val user = userService.getUserById(userId)
 
         contestService.removeUserFromContest(contest, user)
+    }
+
+    @DeleteMapping("/users/{userId}")
+    fun deleteUser(@PathVariable userId: String) {
+        //TODO
+        // come up with something about which users can access this path
+
+        val user = userService.getUserById(userId)
+
+        userService.deleteUser(user)
     }
 }

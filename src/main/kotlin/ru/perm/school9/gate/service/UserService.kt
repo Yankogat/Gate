@@ -12,10 +12,20 @@ class UserService {
     @Autowired
     private lateinit var userRepository: UserRepository
 
+    @Autowired
+    private lateinit var submitService: SubmitService
+
     fun getUserById(userId: String): User = userRepository.findById(userId).orElseThrow { UserNotFoundException() }
 
     fun getAllUsers(): List<User> = userRepository.findAll()
 
     fun getAllUsersFromContest(contest: Contest): List<User> =
-            userRepository.findAllById(contest.userIds ?: emptyList()).toList()
+            userRepository.findAllById(contest.userIds).toList()
+
+    fun deleteUser(user: User) {
+        submitService.deleteSubmitsMadeByUser(user)
+        userRepository.deleteById(user.id!!)
+        //TODO
+        // remove user from all contests
+    }
 }

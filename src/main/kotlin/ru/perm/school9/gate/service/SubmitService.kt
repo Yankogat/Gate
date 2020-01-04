@@ -37,5 +37,9 @@ class SubmitService {
         testerCommunicationService.sendSubmitForTesting(submit)
     }
 
+    fun deleteSubmitsMadeByUser(user: User) {
+        submitRepository.deleteByUserId(user.id!!)
+    }
+
     fun getAllSubmitsByContest(contest: Contest): List<Submit> = submitRepository.findByContestId(contest.id!!)
 }
