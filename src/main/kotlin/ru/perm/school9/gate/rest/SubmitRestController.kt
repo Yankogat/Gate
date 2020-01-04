@@ -28,7 +28,9 @@ class SubmitRestController {
     @GetMapping("/submits")
     fun getAllSubmits(): List<Submit> {
         //TODO
-        return emptyList()
+        // accessible by admins and higher
+
+        return submitService.getAllSubmits()
     }
     @GetMapping("/submits/{submitId}")
     fun getSubmitById(@PathVariable submitId: String): Submit {
@@ -42,13 +44,21 @@ class SubmitRestController {
     @GetMapping("/contests/{contestId}/submits")
     fun getAllSubmitsByContest(@PathVariable contestId: String): List<Submit> {
         //TODO
-        return emptyList()
+        // accessible by admin and higher
+
+        val contest = contestService.getAvailableContestById(contestId)
+
+        return submitService.getAllSubmitsByContest(contest)
     }
 
     @GetMapping("/users/{userId}/submits")
     fun getAllSubmitsByUser(@PathVariable userId: String): List<Submit> {
         //TODO
-        return emptyList()
+        // user can access only get their own submits
+        // fully accessible by admin and higher
+        val user = userService.getUserById(userId)
+
+        return submitService.getAllSubmitsByUser(user)
     }
 
     @GetMapping("/contests/{contestId}/problems/{problemId}/submits")

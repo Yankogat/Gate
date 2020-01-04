@@ -20,4 +20,7 @@ interface SubmitRepository : MongoRepository<Submit, String> {
     @DeleteQuery("{userId: ?0}")
     fun deleteByUserId(userId: String)
 
+    @Query("{userId: ?0}")
+    fun findByUserId(userId: String): List<Submit>
+
 }

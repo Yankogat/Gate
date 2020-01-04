@@ -42,4 +42,5 @@ class SubmitService {
     }
 
     fun getAllSubmitsByContest(contest: Contest): List<Submit> = submitRepository.findByContestId(contest.id!!)
+    fun getAllSubmitsByUser(user: User): List<Submit> = submitRepository.findByUserId(user.id!!)
 }
