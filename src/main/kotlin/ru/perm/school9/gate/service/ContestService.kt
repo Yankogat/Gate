@@ -111,4 +111,14 @@ class ContestService {
 
         updateContest(contest)
     }
+
+    fun getContestsByUser(user: User): List<Contest> = contestRepository.findContestsByUserId(user.id!!)
+
+    fun deleteUserFromAllContests(user: User) {
+        val contests = getContestsByUser(user)
+
+        contests.forEach {contest ->
+            removeUserFromContest(contest, user)
+        }
+    }
 }
