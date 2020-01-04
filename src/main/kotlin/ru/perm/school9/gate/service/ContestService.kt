@@ -3,6 +3,7 @@ package ru.perm.school9.gate.service
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import ru.perm.school9.gate.exception.ContestNotFoundException
+import ru.perm.school9.gate.exception.UserNotFoundException
 import ru.perm.school9.gate.model.*
 import ru.perm.school9.gate.model.alias.IdList
 import ru.perm.school9.gate.model.alias.Monitor
@@ -38,18 +39,13 @@ class ContestService {
     private fun updateContest(contest: Contest) = contestRepository.save(contest)
 
     fun addProblemToContest(contest: Contest, problem: Problem) {
-        //call this function only with problems acquired from database to ensure that they have id
-        //contest acquired from database may not have problemId list
-        contest.problemIds = contest.problemIds.orEmpty() as IdList
-        contest.problemIds!!.add(problem.id!!)
+        contest.problemIds.add(problem.id!!)
 
         updateContest(contest)
     }
 
     fun addUserToContest(contest: Contest, user: User) {
-        //contest acquired from database may not have problemId list
-        contest.userIds = contest.userIds ?: IdList()
-        contest.userIds!!.add(user.id!!)
+        contest.userIds.add(user.id!!)
 
         updateContest(contest)
     }
@@ -74,9 +70,9 @@ class ContestService {
             }
         }
 
-        var monitorStandings = contest.userIds?.map { userId ->
+        var monitorStandings = contest.userIds.map { userId ->
 
-            MonitorStanding(userId, null, contest.problemIds?.map { problemId ->
+            MonitorStanding(userId, null, contest.problemIds.map { problemId ->
                 val filteredSubmits = filterSubmitsByProblemIdAndUserId(submits, problemId, userId)
                 val bestSubmit = getSubmitWithHighestScore(filteredSubmits)
                         ?: Submit(null, null, null, null, null, null, null)
@@ -84,7 +80,7 @@ class ContestService {
                 // even if user has no submits on some problem, they should have score of 0
                 MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score
                         ?: 0, null)
-            } ?: emptyList())
+            })
 
         }
         // make sure list is not null (can happen when contest has null instead of userIds field
@@ -106,5 +102,13 @@ class ContestService {
         return Monitor().apply {
             addAll(monitorStandings)
         }
+    }
+
+    fun removeUserFromContest(contest: Contest, user: User) {
+        contest.userIds.find { it == user.id!! } ?: throw UserNotFoundException()
+
+        contest.userIds.remove(user.id!!)
+
+        updateContest(contest)
     }
 }

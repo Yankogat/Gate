@@ -9,8 +9,8 @@ import ru.perm.school9.gate.model.enum.EContestType
 data class Contest (
         @Id
         var id: String?,
-        var problemIds: IdList?,
-        var userIds: IdList?,
+        var problemIds: IdList,
+        var userIds: IdList,
         var affectsUserRating: Boolean?,
         var contestType: EContestType?
 )
