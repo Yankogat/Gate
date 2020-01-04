@@ -91,6 +91,9 @@ class ContestService {
         monitorStandings = monitorStandings ?: emptyList()
 
         // set place to each standing
+        //TODO
+        // this is block is dependent on contest type
+        // move to where it should belong
         monitorStandings = monitorStandings.sortedBy { standing ->
             standing.totalScore
         }.mapIndexed { index, standing ->
