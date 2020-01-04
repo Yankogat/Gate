@@ -22,6 +22,9 @@ class SubmitRestController {
     @Autowired
     private lateinit var userService: UserService
 
+    //TODO
+    // get opinion on THE ENORMOUS LENGTH OF URLS
+
     @GetMapping("/submits")
     fun getAllSubmits(): List<Submit> {
         //TODO

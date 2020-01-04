@@ -95,6 +95,7 @@ class ContestService {
             standing.totalScore
         }.mapIndexed { index, standing ->
             standing.apply {
+                // places should start at 1, not at 0
                 place = index + 1
             }
         }
