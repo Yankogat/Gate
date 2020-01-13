@@ -19,7 +19,7 @@ class TesterCommunicationService {
         //TODO
         // decide if there is any authentication needed
         val response = Fuel.post("").body(submit.id!!).response()
-        println("Request to test submit ${submit.id!!} has been sent.\n Tester has responded with: $response.")
+        println("Request to test submit ${submit.id!!} has been sent.\n Tester response was: $response.")
     }
 
     @PostConstruct

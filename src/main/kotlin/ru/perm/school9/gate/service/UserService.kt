@@ -23,7 +23,7 @@ class UserService {
     fun getAllUsers(): List<User> = userRepository.findAll()
 
     fun getAllUsersFromContest(contest: Contest): List<User> =
-            userRepository.findAllById(contest.userIds).toList()
+            userRepository.findAllById(contest.userIds.orEmpty()).toList()
 
     fun deleteUser(user: User) {
         submitService.deleteSubmitsMadeByUser(user)

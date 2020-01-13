@@ -3,6 +3,8 @@ package ru.perm.school9.gate.model
 import org.springframework.data.annotation.Id
 import org.springframework.data.mongodb.core.mapping.Document
 
+//TODO
+// add participations
 @Document(collection = "Users")
 data class User (
         @Id

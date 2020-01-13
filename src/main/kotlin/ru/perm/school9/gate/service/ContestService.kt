@@ -5,15 +5,10 @@ import org.springframework.stereotype.Service
 import ru.perm.school9.gate.exception.ContestNotFoundException
 import ru.perm.school9.gate.exception.UserNotFoundException
 import ru.perm.school9.gate.model.*
-import ru.perm.school9.gate.model.alias.IdList
-import ru.perm.school9.gate.model.alias.Monitor
 import ru.perm.school9.gate.model.runtime.MonitorProblemStanding
 import ru.perm.school9.gate.model.runtime.MonitorStanding
 import ru.perm.school9.gate.repo.mongodb.ContestRepository
 
-/** ContestService is responsible for constructing/deconstructing Contest objects from/to ContestDTOs
- *  and basic contest related tasks as middleman between end-user and repository
- * */
 @Service
 class ContestService {
     @Autowired
@@ -39,22 +34,18 @@ class ContestService {
     private fun updateContest(contest: Contest) = contestRepository.save(contest)
 
     fun addProblemToContest(contest: Contest, problem: Problem) {
-        contest.problemIds.add(problem.id!!)
+        contest.problemIds!!.add(problem.id!!)
 
         updateContest(contest)
     }
 
     fun addUserToContest(contest: Contest, user: User) {
-        contest.userIds.add(user.id!!)
+        contest.userIds!!.add(user.id!!)
 
         updateContest(contest)
     }
 
-    fun getMonitorByContest(contest: Contest): Monitor {
-        // HELP, I AM DROWNING IN NULL SAFETY
-        //TODO
-        // decide if all those nullable properties should really be nullable
-
+    fun getMonitorByContest(contest: Contest): List<MonitorStanding> {
         val submits = submitService.getAllSubmitsByContest(contest)
 
         val filterSubmitsByProblemIdAndUserId = { submits: List<Submit>, problemId: String, userId: String ->
@@ -70,17 +61,16 @@ class ContestService {
             }
         }
 
-        var monitorStandings = contest.userIds.map { userId ->
+        var monitorStandings = contest.userIds?.map { userId ->
 
-            MonitorStanding(userId, null, contest.problemIds.map { problemId ->
+            MonitorStanding(userId, null, contest.problemIds?.map { problemId ->
                 val filteredSubmits = filterSubmitsByProblemIdAndUserId(submits, problemId, userId)
                 val bestSubmit = getSubmitWithHighestScore(filteredSubmits)
                         ?: Submit(null, null, null, null, null, null, null)
 
                 // even if user has no submits on some problem, they should have score of 0
-                MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score
-                        ?: 0, null)
-            })
+                MonitorProblemStanding(problemId, filteredSubmits.size, bestSubmit.summary?.score ?: 0, null)
+            } ?: emptyList())
 
         }
         // make sure list is not null (can happen when contest has null instead of userIds field
@@ -88,26 +78,24 @@ class ContestService {
 
         // set place to each standing
         //TODO
-        // this is block is dependent on contest type
-        // move to where it should belong
+        // this block depends on contest type
+        // add
         monitorStandings = monitorStandings.sortedBy { standing ->
             standing.totalScore
         }.mapIndexed { index, standing ->
             standing.apply {
-                // places should start at 1, not at 0
+                // places go from 1, not from 0
                 place = index + 1
             }
         }
 
-        return Monitor().apply {
-            addAll(monitorStandings)
-        }
+        return monitorStandings
     }
 
     fun removeUserFromContest(contest: Contest, user: User) {
-        contest.userIds.find { it == user.id!! } ?: throw UserNotFoundException()
+        contest.userIds?.find { it == user.id!! } ?: throw UserNotFoundException()
 
-        contest.userIds.remove(user.id!!)
+        contest.userIds?.remove(user.id!!)
 
         updateContest(contest)
     }

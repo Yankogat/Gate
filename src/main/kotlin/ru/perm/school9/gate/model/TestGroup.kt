@@ -1,11 +1,11 @@
 package ru.perm.school9.gate.model
 
+//TODO
+// rewrite according to new ideas
 open class TestGroup (
         open var tests: List<Test>?,
         open var testGroups: List<TestGroup>?,
         open var checkerId: String?,
-        //TODO
-        // decide on better name
-        open var conjuctive: Boolean?,
+        open var conjunctive: Boolean?,
         open var value: Int?
 )
