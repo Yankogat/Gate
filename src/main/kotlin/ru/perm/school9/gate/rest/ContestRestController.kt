@@ -3,7 +3,7 @@ package ru.perm.school9.gate.rest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import ru.perm.school9.gate.model.Contest
-import ru.perm.school9.gate.model.alias.Monitor
+import ru.perm.school9.gate.model.runtime.MonitorStanding
 import ru.perm.school9.gate.service.ContestService
 
 @RestController
@@ -23,7 +23,7 @@ class ContestRestController {
     }
 
     @GetMapping("/{contestId}/monitor")
-    fun getContestMonitor(@PathVariable contestId: String): Monitor {
+    fun getContestMonitor(@PathVariable contestId: String): List<MonitorStanding> {
         val contest = getContestById(contestId)
         return contestService.getMonitorByContest(contest)
     }

@@ -1,6 +1,7 @@
 package ru.perm.school9.gate.rest
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import ru.perm.school9.gate.model.User
 import ru.perm.school9.gate.service.ContestService
@@ -13,6 +14,9 @@ class UserRestController {
 
     @Autowired
     private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var passwordEncoder: PasswordEncoder
 
     @GetMapping("/contest/{contestId}/users")
     fun getUsersFromContest(@PathVariable contestId: String): List<User> {
@@ -47,6 +51,16 @@ class UserRestController {
         //TODO
         // accessible by admin and higher
         return userService.getAllUsers()
+    }
+
+    @PostMapping("/users")
+    fun registerNewUser(@RequestBody user: User) {
+        user.validateAndPrepareForRegistration()
+        userService.checkIfUserCanBeRegistered(user)
+
+        user.loginInfo!!.password = passwordEncoder.encode(user.password)
+
+        userService.addUser(user)
     }
 
     @PostMapping("/users/{userId}/makeAdmin")
