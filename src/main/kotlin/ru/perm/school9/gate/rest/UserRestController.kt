@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.web.bind.annotation.*
 import ru.perm.school9.gate.model.User
+import ru.perm.school9.gate.service.AuthenticationService
 import ru.perm.school9.gate.service.ContestService
 import ru.perm.school9.gate.service.UserService
 
@@ -18,11 +19,14 @@ class UserRestController {
     @Autowired
     private lateinit var passwordEncoder: PasswordEncoder
 
+    @Autowired
+    private lateinit var authenticationService: AuthenticationService
+
     @GetMapping("/contest/{contestId}/users")
     fun getUsersFromContest(@PathVariable contestId: String): List<User> {
         //TODO
         // accessible by and admin and higher
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         return userService.getAllUsersFromContest(contest)
     }
@@ -31,7 +35,7 @@ class UserRestController {
     fun addUserContest(@RequestBody userId: String, @PathVariable contestId: String){
         //TODO
         // accessible by admin and higher
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         val user = userService.getUserById(userId)
 
@@ -74,7 +78,7 @@ class UserRestController {
         //TODO
         // come up with something about which users can access this path
 
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         val user = userService.getUserById(userId)
 

@@ -3,10 +3,7 @@ package ru.perm.school9.gate.rest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import ru.perm.school9.gate.model.Submit
-import ru.perm.school9.gate.service.ContestService
-import ru.perm.school9.gate.service.ProblemService
-import ru.perm.school9.gate.service.SubmitService
-import ru.perm.school9.gate.service.UserService
+import ru.perm.school9.gate.service.*
 
 @RestController
 class SubmitRestController {
@@ -21,6 +18,9 @@ class SubmitRestController {
 
     @Autowired
     private lateinit var userService: UserService
+
+    @Autowired
+    private lateinit var authenticationService: AuthenticationService
 
     //TODO
     // get opinion on the length of the urls
@@ -46,7 +46,7 @@ class SubmitRestController {
         //TODO
         // accessible by admin and higher
 
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         return submitService.getAllSubmitsByContest(contest)
     }
@@ -78,7 +78,7 @@ class SubmitRestController {
     @GetMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits")
     fun getAllSubmitsByContestAndProblemAndUser(@PathVariable contestId: String, @PathVariable problemId: String, @PathVariable userId: String): List<Submit> {
         //TODO
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         val problem = problemService.getProblemFromContestById(contest, problemId)
 
@@ -97,7 +97,7 @@ class SubmitRestController {
     @PostMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits")
     fun addSubmitByContestAndProblemAndUser(@RequestBody submit: Submit, @PathVariable contestId: String, @PathVariable problemId: String, @PathVariable userId: String) {
         //TODO
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         val problem = problemService.getProblemFromContestById(contest, problemId)
 

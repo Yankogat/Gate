@@ -17,15 +17,11 @@ class ContestService {
     @Autowired
     private lateinit var submitService: SubmitService
 
-    fun getAvailableContests(): List<Contest> {
-        //TODO
-        // check contests for availability
+    fun getAllContests(): List<Contest> {
         return contestRepository.findAll()
     }
 
-    fun getAvailableContestById(contestId: String): Contest {
-        //TODO
-        // check contest for availability
+    fun getContestById(contestId: String): Contest {
         return contestRepository.findById(contestId).orElseThrow { ContestNotFoundException() }
     }
 

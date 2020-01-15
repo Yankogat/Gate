@@ -3,6 +3,7 @@ package ru.perm.school9.gate.rest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import ru.perm.school9.gate.model.Problem
+import ru.perm.school9.gate.service.AuthenticationService
 import ru.perm.school9.gate.service.ContestService
 import ru.perm.school9.gate.service.ProblemService
 
@@ -14,12 +15,15 @@ class ProblemRestController {
     @Autowired
     private lateinit var problemService: ProblemService
 
+    @Autowired
+    private lateinit var authenticationService: AuthenticationService
+
     @GetMapping("/contests/{contestId}/problems")
     fun getProblems(@PathVariable contestId: String): List<Problem> {
         //TODO
         // Get contest by id if it is available for authenticated user
         // If not, throw 403
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
         // Get all problems from specified contest
         // Return said problems
         return problemService.getAllProblemsFromContest(contest)
@@ -29,7 +33,7 @@ class ProblemRestController {
     fun addProblemToContest(@RequestBody problemId: String,  @PathVariable contestId: String) {
         //TODO
         // check if user is admin
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
 
         val problem = problemService.getProblemById(problemId)
 
@@ -41,7 +45,7 @@ class ProblemRestController {
         // TODO
         // Get contest by id if it is available for authenticated user
         // If not, throw 403
-        val contest = contestService.getAvailableContestById(contestId)
+        val contest = contestService.getContestById(contestId)
         // Get problem by it from specified contest
         // Return said problem
         return problemService.getProblemFromContestById(contest, problemId)
