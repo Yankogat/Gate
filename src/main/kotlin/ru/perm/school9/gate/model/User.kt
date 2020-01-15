@@ -1,6 +1,7 @@
 package ru.perm.school9.gate.model
 
 import org.springframework.data.annotation.Id
+import org.springframework.data.annotation.Transient
 import org.springframework.data.mongodb.core.mapping.Document
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
@@ -20,16 +21,21 @@ class User : UserDetails {
 
     override fun getAuthorities(): MutableCollection<out GrantedAuthority>
             = arrayListOf(SimpleGrantedAuthority(role?.name ?: EUserRole.USER.name))
-
+    @Transient
     override fun getUsername(): String = this.loginInfo?.username ?: ""
+    @Transient
     override fun getPassword(): String = this.loginInfo?.password ?: ""
 
 
     //TODO
     // maybe implement these later
+    @Transient
     override fun isEnabled() = true
+    @Transient
     override fun isAccountNonLocked() = true
+    @Transient
     override fun isAccountNonExpired() = true
+    @Transient
     override fun isCredentialsNonExpired() = true
 
     // "prepare" part of the function consists of resetting variables that may be explicitly set by user eg role and id

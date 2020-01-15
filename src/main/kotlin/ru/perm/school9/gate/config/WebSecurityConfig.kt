@@ -16,7 +16,7 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
     private lateinit var userService: UserService
 
     override fun configure(http: HttpSecurity) {
-        http.csrf().disable().authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin().loginPage("/login").permitAll()
+        http.csrf().disable().authorizeRequests().anyRequest().fullyAuthenticated().and().formLogin().permitAll()
     }
 
 
