@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service
 import ru.perm.school9.gate.exception.ContestNotFoundException
 import ru.perm.school9.gate.exception.UserNotFoundException
 import ru.perm.school9.gate.model.*
-import ru.perm.school9.gate.model.runtime.MonitorProblemStanding
-import ru.perm.school9.gate.model.runtime.MonitorStanding
+import ru.perm.school9.gate.model.monitor.MonitorProblemStanding
+import ru.perm.school9.gate.model.monitor.MonitorStanding
 import ru.perm.school9.gate.repo.mongodb.ContestRepository
 
 @Service

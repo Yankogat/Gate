@@ -3,7 +3,7 @@ package ru.perm.school9.gate.rest
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 import ru.perm.school9.gate.model.Contest
-import ru.perm.school9.gate.model.runtime.MonitorStanding
+import ru.perm.school9.gate.model.monitor.MonitorStanding
 import ru.perm.school9.gate.service.AuthenticationService
 import ru.perm.school9.gate.service.ContestService
 
