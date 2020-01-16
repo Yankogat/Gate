@@ -22,7 +22,8 @@ class WebSecurityConfig : WebSecurityConfigurerAdapter() {
         http
                 .cors().and().csrf().disable()
                 .authorizeRequests().anyRequest().fullyAuthenticated()
-                .and().formLogin().successHandler { _, _, _ -> }.permitAll()
+                .and().exceptionHandling().authenticationEntryPoint { _, httpServletResponse, _ ->  httpServletResponse.status = 401}
+                .and().formLogin().successHandler { _, _, _ -> }.failureHandler { _, httpServletResponse, _ -> httpServletResponse.status = 401 }.permitAll()
                 .and().logout().deleteCookies("JSESSIONID")
     }
 

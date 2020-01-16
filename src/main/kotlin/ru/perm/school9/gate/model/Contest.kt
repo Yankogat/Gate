@@ -8,10 +8,11 @@ import ru.perm.school9.gate.model.enum.EContestType
 data class Contest (
         @Id
         var id: String?,
+        var name: String? = "",
         var problemIds: MutableList<String>? = mutableListOf(),
         var userIds: MutableList<String>? = mutableListOf(),
-        var affectsUserRating: Boolean?,
-        var contestType: EContestType?
+        var affectsUserRating: Boolean? = false,
+        var contestType: EContestType? = EContestType.KIROV
 )
 
 
