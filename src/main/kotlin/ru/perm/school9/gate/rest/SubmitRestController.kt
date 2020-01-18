@@ -89,9 +89,8 @@ class SubmitRestController {
 
     @PostMapping("/contests/{contestId}/problems/{problemId}/submits")
     fun addSubmitByContestAndProblem(@RequestBody submit: Submit, @PathVariable contestId: String, @PathVariable problemId: String) {
-        //TODO
-        // get authenticated user
-        // call addSubmitByContestAndProblemAndUser
+        val userId = this.authenticationService.getAuthenticatedUser().id!!
+        this.addSubmitByContestAndProblemAndUser(submit, contestId, problemId, userId)
     }
 
     @PostMapping("/contests/{contestId}/problems/{problemId}/users/{userId}/submits")
